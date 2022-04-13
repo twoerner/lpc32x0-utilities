@@ -5,10 +5,10 @@ Introduction
 ------------
 This repository contains a number of utilities for poking around on an NXP
 lpc32x0 SoC. The current set of utilities include:
-	* `lpc32x0-offline`
-	* `lpc32x0-dump`
-	* `lpc32x0-write`
-	* `lpc32x0-spi`
+  * `lpc32x0-offline`
+  * `lpc32x0-dump`
+  * `lpc32x0-write`
+  * `lpc32x0-spi`
 
 `lpc32x0-dump`, `lpc32x0-write`, and `lpc32x0-spi` are meant to be run on
 an lpc32x0 device and will interact with the actual registers of the

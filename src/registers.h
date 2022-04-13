@@ -56,5 +56,6 @@ void lpc32x0__cleanup (void);
 #define SPI1_FRM    0x20088008
 #define SPI1_STAT   0x20088010
 #define SPI1_DAT    0x20088014
+#define P3_INP_STATE 0x40028000
 
 #endif

@@ -15,6 +15,7 @@
 static void spi_init (void);
 static void spi_reset (void);
 static void spi_deinit (void);
+static bool bootstick_present (void);
 static void cs_high (void);
 static void cs_low (void);
 static void spi_tx (uint8_t *data_p, uint32_t len);
@@ -98,17 +99,46 @@ spi_deinit (void)
 {
 }
 
+/*
+ * on my board an optional "bootstick" can be plugged into a header on the board
+ * the bootstick is basically a spi-nor on a breakout board
+ * the device has circuitry to detect whether or not the bootstick is present
+ * and, if so, switch around the chip selects so that the bootstick is
+ * selected rather than the on-board spi-nor using the same chip select line
+ *
+ * if the bootstick is present:
+ * 	chip select for on-board spi-nor:  GPIO_4
+ * 	chip select for bootstick spi-nor: GPIO_5
+ * else
+ * 	chip select for on-board spi-nor:  GPIO_5
+ */
+static bool
+bootstick_present (void)
+{
+	uint32_t val;
+
+	lpc32x0__get_reg(P3_INP_STATE, &val);
+	if (val & 0x08)
+		return true;
+	return false;
+}
+
 static void
 cs_high (void)
 {
-	// P3_OUTP_SET - set GPIO_5 to 1
-	lpc32x0__set_reg(P3_OUTP_SET, 0x40000000);
+	if (bootstick_present())
+		lpc32x0__set_reg(P3_OUTP_SET, 0x20000000);
+	else
+		lpc32x0__set_reg(P3_OUTP_SET, 0x40000000);
 }
 
 static void
 cs_low (void)
 {
-	lpc32x0__set_reg(P3_OUTP_CLR, 0x40000000);
+	if (bootstick_present())
+		lpc32x0__set_reg(P3_OUTP_CLR, 0x20000000);
+	else
+		lpc32x0__set_reg(P3_OUTP_CLR, 0x40000000);
 }
 
 static void

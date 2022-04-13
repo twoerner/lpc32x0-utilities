@@ -5,22 +5,22 @@ Introduction
 ------------
 This repository contains a number of utilities for poking around on an NXP
 lpc32x0 SoC. The current set of utilities include:
-	- lpc32x0-offline
-	- lpc32x0-dump
-	- lpc32x0-write
-	- lpc32x0-spi
+	* `lpc32x0-offline`
+	* `lpc32x0-dump`
+	* `lpc32x0-write`
+	* `lpc32x0-spi`
 
-lpc32x0-dump, lpc32x0-write, and lpc32x0-spi are meant to be run on
+`lpc32x0-dump`, `lpc32x0-write`, and `lpc32x0-spi` are meant to be run on
 an lpc32x0 device and will interact with the actual registers of the
 lpc32x0 SoC to get and potentially set their values. These utilities
 require adequate privilege in order to run successfully (i.e. be root).
 
-lpc32x0-offline, on the other hand, can be run on an lpc32x0 device or on
+`lpc32x0-offline`, on the other hand, can be run on an lpc32x0 device or on
 another device, and will simply display information about the data you give
 to it.
 
 lpc32x0-offline
-^^^^^^^^^^^^^^^
+---------------
 Use this program to fully decode the registers and register sub-fields
 of the lpc3250 configuration registers. This program does not probe the actual
 contents of the registers; it only responds to the data you give it.
@@ -55,20 +55,20 @@ uboot> md.l 0x40024000 7
 ```
 
 lpc32x0-dump
-^^^^^^^^^^^^
+------------
 Use this utility on-device to see the contents of various registers. You can
 specify the register(s) by specifying them on the cmdline with the
-"-r|--reg" option, you can specify sets of registers with the "-s|--set"
+`-r|--reg` option, you can specify sets of registers with the `-s|--set`
 option, or a combination of both. Both options take a space-delimited,
 comma-delimited, or space-and-comma-delimited list of registers/sets.
 Registers are specified by providing their address(es).
 
-By default using the "-s|--set" option will show their contents; specifying
-the "-r|--reg" option will give a detailed breakdown of the sub-fields
-within the register. The "-v|--verbose" option can be used with the
-"-s|--set" option to show detailed information for sets of registers.
+By default using the `-s|--set` option will show their contents; specifying
+the `-r|--reg` option will give a detailed breakdown of the sub-fields
+within the register. The `-v|--verbose` option can be used with the
+`-s|--set` option to show detailed information for sets of registers.
 
-The "-h|--help" option shows the help information along with the
+The `-h|--help` option shows the help information along with the
 currently-supported list of register set names.
 
 examples:
@@ -174,7 +174,7 @@ examples:
 				0b0000011..........................value: 3
 
 lpc32x0-write
-^^^^^^^^^^^^^
+-------------
 Use this program to set register values. The expected usage is:
 
 	# lpc32x0-write <addr> <value>
@@ -183,7 +183,7 @@ This program will only set the value of a register if it is different from its
 current value.
 
 lpc32x0-spi
-^^^^^^^^^^^
+-----------
 This program is an investigation program I wrote to interact with what is
 assumed to be a spi-nor flash (e.g. M25P16) sitting on the SPI1 bus which is
 enabled by /GPIO_5.
@@ -201,7 +201,7 @@ Compiling/Building
 ------------------
 - this project uses cmake
 - assuming you want to build in a subdirectory under the main checkout called
-  'builddir', from the project's top-level directory, run:
+  `builddir`, from the project's top-level directory, run:
 
 ```
 $ mkdir builddir
@@ -210,7 +210,7 @@ $ cmake ..
 ```
 
 - this only ever needs to be done once
-- then switch to the build location (i.e. builddir) and run:
+- then switch to the build location (i.e. `builddir`) and run:
 
 ```
 $ make

@@ -23,7 +23,7 @@ static void spi_readflash (uint8_t *data_p, uint32_t addr, uint32_t len);
 static void spi_getid (void);
 static void print_buf (uint32_t len);
 
-uint8_t buf_G[256];
+static uint8_t buf_G[256];
 
 int
 main (void)

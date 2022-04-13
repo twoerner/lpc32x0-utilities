@@ -26,6 +26,7 @@ static void spi_getid (void);
 static void print_buf (uint32_t len);
 
 static uint8_t buf_G[256];
+static bool verbose_G = false;
 static bool bootstick_G = false;
 
 int
@@ -33,15 +34,19 @@ main (int argc, char *argv[])
 {
 	int c;
 	struct option longOpts[] = {
+		{"verbose", no_argument, NULL, 'v'},
 		{"bootstick", no_argument, NULL, 'b'},
 		{NULL, 0, NULL, 0},
 	};
 
 	while (1) {
-		c = getopt_long(argc, argv, "b", longOpts, NULL);
+		c = getopt_long(argc, argv, "vb", longOpts, NULL);
 		if (c == -1)
 			break;
 		switch (c) {
+			case 'v':
+				verbose_G = true;
+				break;
 			case 'b':
 				if (!bootstick_present()) {
 					fprintf(stderr, "no bootstick present\n");
@@ -105,17 +110,21 @@ spi_init (void)
 static void
 spi_reset (void)
 {
-	lpc32x0__get_and_print_reg_set_by_name("clkpwr", false);
-	lpc32x0__get_and_print_reg_set_by_name("spi", false);
-	lpc32x0__get_and_print_reg_set_by_name("ssp", false);
+	if (verbose_G) {
+		lpc32x0__get_and_print_reg_set_by_name("clkpwr", false);
+		lpc32x0__get_and_print_reg_set_by_name("spi", false);
+		lpc32x0__get_and_print_reg_set_by_name("ssp", false);
+	}
 
 	// SPI1 global - reset
 	lpc32x0__set_reg(SPI1_GLOBAL, 0x03);
 	lpc32x0__set_reg(SPI1_GLOBAL, 0x01);
 
-	lpc32x0__get_and_print_reg_set_by_name("clkpwr", false);
-	lpc32x0__get_and_print_reg_set_by_name("spi", false);
-	lpc32x0__get_and_print_reg_set_by_name("ssp", false);
+	if (verbose_G) {
+		lpc32x0__get_and_print_reg_set_by_name("clkpwr", false);
+		lpc32x0__get_and_print_reg_set_by_name("spi", false);
+		lpc32x0__get_and_print_reg_set_by_name("ssp", false);
+	}
 }
 
 static void

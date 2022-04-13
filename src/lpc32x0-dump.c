@@ -10,12 +10,8 @@
 #include <stdbool.h>
 #include <inttypes.h>
 #include <errno.h>
-#include <fcntl.h>
 #include <unistd.h>
 #include <getopt.h>
-#include <sys/stat.h>
-#include <sys/types.h>
-#include <sys/mman.h>
 
 #include "registers.h"
 

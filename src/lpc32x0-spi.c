@@ -9,6 +9,7 @@
 #include <string.h>
 #include <errno.h>
 #include <unistd.h>
+#include <getopt.h>
 
 #include "registers.h"
 
@@ -25,10 +26,33 @@ static void spi_getid (void);
 static void print_buf (uint32_t len);
 
 static uint8_t buf_G[256];
+static bool bootstick_G = false;
 
 int
-main (void)
+main (int argc, char *argv[])
 {
+	int c;
+	struct option longOpts[] = {
+		{"bootstick", no_argument, NULL, 'b'},
+		{NULL, 0, NULL, 0},
+	};
+
+	while (1) {
+		c = getopt_long(argc, argv, "b", longOpts, NULL);
+		if (c == -1)
+			break;
+		switch (c) {
+			case 'b':
+				if (!bootstick_present()) {
+					fprintf(stderr, "no bootstick present\n");
+					lpc32x0__cleanup();
+					return 1;
+				}
+				bootstick_G = true;
+				break;
+		}
+	}
+
 	spi_init();
 	spi_getid();
 	spi_reset();
@@ -126,7 +150,7 @@ bootstick_present (void)
 static void
 cs_high (void)
 {
-	if (bootstick_present())
+	if (bootstick_present() && !bootstick_G)
 		lpc32x0__set_reg(P3_OUTP_SET, 0x20000000);
 	else
 		lpc32x0__set_reg(P3_OUTP_SET, 0x40000000);
@@ -135,7 +159,7 @@ cs_high (void)
 static void
 cs_low (void)
 {
-	if (bootstick_present())
+	if (bootstick_present() && !bootstick_G)
 		lpc32x0__set_reg(P3_OUTP_CLR, 0x20000000);
 	else
 		lpc32x0__set_reg(P3_OUTP_CLR, 0x40000000);

@@ -130,6 +130,13 @@ spi_reset (void)
 static void
 spi_deinit (void)
 {
+	// SPI1 global - reset
+	lpc32x0__set_reg(SPI1_GLOBAL, 0x00000003);
+	lpc32x0__set_reg(SPI1_GLOBAL, 0x00000001);
+	lpc32x0__set_reg(SPI1_GLOBAL, 0x00000000);
+
+	// SPI control - disable
+	lpc32x0__set_reg(SPI_CTRL, 0x00000000);
 }
 
 /*

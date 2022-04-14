@@ -46,16 +46,16 @@ void lpc32x0__cleanup (void);
 
 #define ITEMFMT "\t\t%7s %s\n"
 
-#define P2_MUX_CLR  0x4002802C
-#define P2_DIR_SET  0x40028010
-#define SPI_CTRL    0x400040C4
-#define SPI1_GLOBAL 0x20088000
-#define P3_OUTP_SET 0x40028004
-#define P3_OUTP_CLR 0x40028008
-#define SPI1_CON    0x20088004
-#define SPI1_FRM    0x20088008
-#define SPI1_STAT   0x20088010
-#define SPI1_DAT    0x20088014
+#define P2_MUX_CLR   0x4002802C
+#define P2_DIR_SET   0x40028010
+#define SPI_CTRL     0x400040C4
+#define SPI1_GLOBAL  0x20088000
+#define P3_OUTP_SET  0x40028004
+#define P3_OUTP_CLR  0x40028008
+#define SPI1_CON     0x20088004
+#define SPI1_FRM     0x20088008
+#define SPI1_STAT    0x20088010
+#define SPI1_DAT     0x20088014
 #define P3_INP_STATE 0x40028000
 
 #endif

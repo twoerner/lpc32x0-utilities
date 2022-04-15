@@ -73,6 +73,9 @@ print_buf (uint32_t len)
 {
 	uint32_t i;
 
+	if (len == 0)
+		return;
+
 	for (i=0; i<len; ++i) {
 		printf("%02x", buf_G[i]);
 		if (((i+1) % 16) == 0)
@@ -186,6 +189,8 @@ spi_tx (uint8_t *data_p, uint32_t len)
 {
 	uint32_t val, frameLen;
 
+	if (data_p == NULL)
+		return;
 	if (len == 0)
 		return;
 
@@ -220,6 +225,8 @@ spi_rx (uint8_t *data_p, uint32_t len)
 {
 	uint32_t val, frameLen;
 
+	if (data_p == NULL)
+		return;
 	if (len == 0)
 		return;
 
@@ -261,6 +268,8 @@ spi_readflash (uint8_t *data_p, uint32_t addr, uint32_t len)
 {
 	uint8_t command[5];
 
+	if (data_p == NULL)
+		return;
 	if (len == 0)
 		return;
 

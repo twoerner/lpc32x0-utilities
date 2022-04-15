@@ -77,6 +77,8 @@ exitmemfd:
 static void
 usage (char *pgm_p)
 {
+	if (pgm_p == NULL)
+		return;
 	printf("set the contents of a register at <addr> to a given <value>\n");
 	printf("usage:\n");
 	printf("  %s <addr> <value>\n", pgm_p);

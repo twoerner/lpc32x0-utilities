@@ -125,7 +125,8 @@ usage (char *pgm_p)
 	size_t i;
 
 	printf("usage:\n");
-	printf("%s [<options>]\n", pgm_p);
+	if (pgm_p != NULL)
+		printf("%s [<options>]\n", pgm_p);
 	printf("  where:\n");
 	printf("    options:\n");
 	printf("      -h|--help      print usage information and exit successfully\n");

@@ -42,7 +42,6 @@ bool lpc32x0__set_reg (uint32_t addr, uint32_t val);
 bool lpc32x0__print_reg (uint32_t addr, uint32_t val, bool verbose);
 bool lpc32x0__get_and_print_reg_set_by_name (char *regSetName_p, bool verbose);
 bool lpc32x0__get_and_print_all_regs (bool verbose);
-void lpc32x0__cleanup (void);
 
 #define ITEMFMT "\t\t%7s %s\n"
 

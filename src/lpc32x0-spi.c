@@ -50,7 +50,6 @@ main (int argc, char *argv[])
 			case 'b':
 				if (!bootstick_present()) {
 					fprintf(stderr, "no bootstick present\n");
-					lpc32x0__cleanup();
 					return 1;
 				}
 				bootstick_G = true;
@@ -64,7 +63,6 @@ main (int argc, char *argv[])
 	spi_readflash(buf_G, 0, sizeof(buf_G));
 	spi_deinit();
 
-	lpc32x0__cleanup();
 	return 0;
 }
 

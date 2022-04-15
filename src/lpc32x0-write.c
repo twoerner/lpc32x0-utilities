@@ -70,7 +70,6 @@ main (int argc, char *argv[])
 
 	ret = 0;
 exitmemfd:
-	lpc32x0__cleanup();
 	return ret;
 }
 

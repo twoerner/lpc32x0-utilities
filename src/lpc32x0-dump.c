@@ -111,7 +111,6 @@ main (int argc, char *argv[])
 
 	retVal = 0;
 badexit:
-	lpc32x0__cleanup();
 	if (regSet_p != NULL)
 		free(regSet_p);
 	if (reg_p != NULL)

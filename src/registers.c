@@ -5,6 +5,7 @@
 
 #include <stdio.h>
 #include <stdint.h>
+#include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
 #include <fcntl.h>
@@ -143,6 +144,19 @@ static int memFd_G = -1;
 static void *map_pG = NULL;
 static uint32_t curBase_G = 0;
 
+static void
+cleanup (void)
+{
+	if (memFd_G != -1) {
+		close(memFd_G);
+		memFd_G = -1;
+	}
+	if (map_pG != NULL) {
+		munmap(map_pG, 0x00001000);
+		map_pG = NULL;
+	}
+}
+
 static bool
 open_dev_mem (void)
 {
@@ -152,6 +166,7 @@ open_dev_mem (void)
 			perror("open(/dev/mem)");
 			return false;
 		}
+		atexit(cleanup);
 	}
 	return true;
 }
@@ -233,19 +248,6 @@ lpc32x0__set_reg (uint32_t addr, uint32_t val)
 		}
 	}
 	return false;
-}
-
-void
-lpc32x0__cleanup (void)
-{
-	if (memFd_G != -1) {
-		close(memFd_G);
-		memFd_G = -1;
-	}
-	if (map_pG != NULL) {
-		munmap(map_pG, 0x00001000);
-		map_pG = NULL;
-	}
 }
 
 bool
